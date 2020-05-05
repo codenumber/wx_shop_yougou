@@ -1,0 +1,22 @@
+<view class="cate">
+  <SearchInput></SearchInput>
+  <view class="cate_container">
+    <scroll-view scroll-y class="cate_menu">
+      <view bindtap="handleChangeIndex" data-index="{{index}}" class="catemenu_item {{activeIndex === index? 'active' : ''}}" wx:for="{{cateMenu}}" wx:key="index">
+        {{item}}
+      </view>
+    </scroll-view>
+    <scroll-view scroll-y scroll-top="{{scrollTop}}" class="cate_rightcontent" >
+      <view  wx:for="{{rightContent}}" wx:for-item="item1" wx:for-index="index1" wx:key="{{item1.cat_id}}">
+       <text class="content_title">/ {{item1.cat_name}} /</text> 
+        <view class="content">
+          <navigator wx:for="{{item1.children}}" wx:for-item="item2" wx:for-index="index2" wx:key="item2.cat_id">
+            <image mode="widthFix" src="{{item2.cat_icon}}">
+            </image>
+            <text>{{item2.cat_name}}</text>
+          </navigator>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

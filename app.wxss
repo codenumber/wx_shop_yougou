@@ -1,0 +1,13 @@
+
+page,button,view,swiper,swiper-item,navigator{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+page {
+  --themeColor: #f8554d;
+  font-size: 28rpx;
+}
+image {
+  width: 100%;
+}
