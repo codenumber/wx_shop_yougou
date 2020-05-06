@@ -1,18 +1,82 @@
 // pages/goods_list/goods_list.js
+import {request} from '../../request/index.js'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    tabs: [
+      {
+        id: '1',
+        value: '综合',
+        isActive: true
+      },
+      {
+        id: '2',
+        value: '销量',
+        isActive: false
+      },
+      {
+        id: '3',
+        value: '价格',
+        isActive: false
+      }
+    ],
+    goodsList: []
   },
-
+  queryInfo: {
+    query: '',
+    cid: 0,
+    pagenum: 1,
+    pagesize: 10
+  },
+  cid: 0,
+  total: 0,
+  changItemIndex(e) {
+    const {index} = e.detail
+    this.data.tabs.forEach((v,i) => i === index ? v.isActive = true:v.isActive = false)
+    this.setData({
+      tabs: this.data.tabs
+    })
+  },
+  async getGoodsList() {
+    this.queryInfo.cid = this.cid
+    const res = await request({url:'/goods/search',data: this.queryInfo})
+    if (res.data.meta.status !== 200) return
+    console.log(res.data.message)
+    this.total = res.data.message.total
+    this.setData({
+      goodsList: res.data.message.goods
+    })
+    wx.stopPullDownRefresh()
+  },
+  // 获取新数据
+  async  getNewGoodsList() {
+    this.queryInfo.pagenum++
+    if (this.queryInfo.pagenum <= Math.ceil(this.total/this.queryInfo.pagesize)) {
+      const res = await request({url:'/goods/search',data: this.queryInfo})
+      if (res.data.meta.status !== 200) return
+      const newGoodsList = res.data.message.goods
+      console.log(res)
+      const goodsList = [...newGoodsList,...this.data.goodsList]
+       this.setData({
+         goodsList: goodsList
+       })
+    } else {
+      wx.showToast({
+        title: '没有商品了哦'
+      })
+    }
+   
+    
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+ onLoad: function (options) {
+    this.cid = options.cid
+    this.getGoodsList()
   },
 
   /**
@@ -47,14 +111,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.setData({
+      goodsList: []
+    })
+    this.getGoodsList()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getNewGoodsList()
   },
 
   /**

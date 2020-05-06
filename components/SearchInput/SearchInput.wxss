@@ -2,6 +2,7 @@
   height: 90rpx;
   background-color: var(--themeColor);
   padding: 10rpx;
+  width: 100%;
 }
 .search_nav {
   display: flex;

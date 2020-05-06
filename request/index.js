@@ -1,5 +1,11 @@
+let ajaxTimes = 0
 export  const request = (params) => {
   const base_Url = "https://api-hmugo-web.itheima.net/api/public/v1"
+  ajaxTimes ++
+  wx.showLoading({
+    title: '加载中',
+    mask: true
+  })
   return new Promise((resolve, reject) => {
     wx.request({
       ...params,
@@ -9,6 +15,13 @@ export  const request = (params) => {
       },
       fail: (result) => {
         reject(result)
+      },
+      complete: () => {
+        ajaxTimes --
+        if (ajaxTimes === 0) {
+          wx.hideLoading()
+        }
+        
       }
     })
   })

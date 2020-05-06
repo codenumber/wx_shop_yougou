@@ -28,7 +28,7 @@ Page({
     })
   },
   async getGoodsList() {
-    const res = request({url: '/home/floordata'})
+    const res = await request({url: '/home/floordata'})
     if (res.data.meta.status !== 200) return 
     this.setData({
       floorList: res.data.message
@@ -72,6 +72,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    
     
   },
 
