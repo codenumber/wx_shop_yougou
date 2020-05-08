@@ -35,3 +35,61 @@ export const chooseAddress = () => {
     })
   })
 }
+
+export const showModal = (content) => {
+  return  new Promise((resolve,reject) => {
+    wx.showModal({
+      title: '提示',
+      content: content,
+      success: (result) => {
+        resolve(result)
+      },
+      fail: (result1) => {
+        reject(result1)
+      }
+    })
+  })
+}
+export const showToast = (title) => {
+  return  new Promise((resolve,reject) => {
+    wx.showToast({
+      title:  title,
+      icon: 'success',
+      success: (result) => {
+        resolve(result)
+      },
+      fail: (result1) => {
+        reject(result1)
+      }
+    })
+  })
+}
+export const getLogin = () => {
+  return  new Promise((resolve,reject) => {
+    wx.login({
+      fail: (err) => {
+        reject(err)
+      },
+      success: (result) => {
+        resolve(result)
+      },
+    })
+  })
+}
+export const requestPayment = (pay) => {
+  return  new Promise((resolve,reject) => {
+    wx.requestPayment({
+      ...pay,
+      success: (res) => {
+        resolve(res)
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  })
+}
+
+
+
+

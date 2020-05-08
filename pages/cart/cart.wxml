@@ -6,7 +6,7 @@
     <view class="address_info">
       <view class="address_name_phone">
         <view class="name">收货人：{{address.userName}}</view>
-        <view class="phone">收货地址：{{address.telNumber}}</view>
+        <view class="phone">收货手机：{{address.telNumber}}</view>
       </view>
       <view class="address_all">
       {{address.all}}
@@ -17,43 +17,46 @@
     <view class="cart_detail">
       购物车详情
     </view>
-    <view class="cart_main">
-      <view class="cart_item">
-          <checkbox-group>
-            <checkbox></checkbox>
+    <view wx:if="{{cart.length}}" class="cart_main">
+      <view  class="cart_item" wx:for="{{cart}}" wx:key="goods_id">
+          <checkbox-group data-id="{{item.goods_id}}" bindtap="changeGoodsCheckedStatus">
+            <checkbox checked="{{item.checked}}"></checkbox>
           </checkbox-group>
           <navigator class="cart_img">
-            <image src="http://image1.suning.cn/uimg/b2c/newcatentries/0070134290-000000000149003877_1_200x200.jpg" mode="widthFix"></image>
+            <image src="{{item.goods_small_logo}}" mode="widthFix"></image>
           </navigator>
           <view class="goods_desc">
-            <view class="goods_name">spike 经典武士大马士革直刀(微型) 户外野营直刀 收藏礼品刀 饰品刀具</view>
+            <view class="goods_name">{{item.goods_name}}</view>
             <view class="goods_price_num">
-              <view class="goods_price">￥999</view>
+              <view class="goods_price">￥{{item.goods_price}}</view>
               <view class="cart_tool">
-                <view class="cart_edit">+</view>
-                <view class="goods_num">10</view>
-                <view class="cart_edit">-</view>
+                <view class="cart_edit" data-id="{{item.goods_id}}" data-operation="1" bindtap="changeGoodsNum">+</view>
+                <view class="goods_num">{{item.num}}</view>
+                <view class="cart_edit" data-id="{{item.goods_id}}" data-operation="-1" bindtap="changeGoodsNum">-</view>
               </view>
             </view>
           </view>
       </view>
     </view>
+    
+    <view wx:else>
+      <image mode="widthFix" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588850263913&di=828179d7bab4b8263ec1038729ca1dcc&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fe1b1467beea0a9c7d6a56b32bac6d7e5dcd914f7c3e6-YTwUd6_fw658"></image>
+    </view>
   </view>
 
 
   <view class="bottom_tool">
-    <checkbox-group>
-      <checkbox>全选
+    <checkbox-group bindtap="changeAllCheckedStatus">
+      <checkbox checked="{{allChecked}}">全选
       </checkbox>
     </checkbox-group>
     <view class="cart_sum_price">
       <view class="sum_price">
         <view>合计：</view>
-        <view class="sum_price_num">$888</view>  
+        <view class="sum_price_num">￥{{totalPrice}}</view>  
       </view>
       <view class="freight_text">包含运费</view>
     </view>
-    <view class="sumbtn">结算</view>
+    <view class="sumbtn" bindtap="toPay">结算({{totalNum}})</view>
   </view>
-
 </view>

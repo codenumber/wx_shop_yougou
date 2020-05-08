@@ -10,7 +10,11 @@
       <view class="goods_name">
       {{goodsInfo.goods_name}}
       </view>
-      <view class="iconfont icon-star"></view>
+      <view class="collect" bindtap="changeCollectStatus"> 
+        <view class="iconfont {{isCollect ? 'icon-star--filled':'icon-star'}}"></view>
+        <view class="collect_text"><text wx:if="{{isCollect}}">已</text>收藏</view>
+      </view>
+      
     </view>
     <view class="introduce_title">
       图文详情

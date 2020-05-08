@@ -1,2 +1,25 @@
-<!--pages/collect/collect.wxml-->
-<text>pages/collect/collect.wxml</text>
+<view class="collect_pg">
+<Tabs tabs="{{tabs}}" bindchangActiveIndex="changItemIndex">
+
+  <view class="collect_mian">
+    <view class="collect_title">
+      <view class="title_item active">全部</view>
+      <view class="title_item">正在热卖</view>
+      <view class="title_item">即将上线</view>
+    </view>
+    <view class="collect_content">
+       <view class="goods_list">
+        <navigator class="goods" url="../goods_detail/goods_detail?goods_id={{item.goods_id}}" wx:for="{{goodsList}}" wx:key="goods_id">
+          <view class="goods_image">
+            <image src="{{item.goods_small_logo?item.goods_small_logo:'http://image1.suning.cn/uimg/b2c/newcatentries/0000000000-000000000606020881_1_400x400.jpg'}}" mode="widthFix"></image>
+          </view>
+          <view class="goods_desc">
+            <text class="goods_name">{{item.goods_name}}</text>
+            <text class="goods_price">￥{{item.goods_price}}</text>
+          </view> 
+        </navigator>
+    </view>
+    </view>
+  </view>
+</Tabs>
+</view>

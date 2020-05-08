@@ -29,13 +29,24 @@
   padding-left: 15rpx;
   margin-bottom: 10rpx;
 }
-.goods_title .iconfont {
+.collect {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 66rpx;
   border-left: 5rpx solid #000;
+  flex-direction: column;
+
+}
+ .iconfont {
+  font-size: 50rpx;
+}
+.collect_text,.collect_text text {
+  font-size: 26rpx;
+}
+.icon-star--filled {
+  color: var(--themeColor);
 }
 .introduce_title {
   height: 80rpx;

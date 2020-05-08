@@ -1,2 +1,13 @@
-<!--pages/search/search.wxml-->
-<text>pages/search/search.wxml</text>
+<view class="search_pg">
+  <view class="searh_query">
+    <input value="{{inputValue}}" class="search_input" bindinput="handleInput"  placeholder="请输入查找的内容">
+    </input>
+    <view class="search_content" wx:if="{{searGoodsList.length}}">
+        <navigator url="../goods_detail/goods_detail?goods_id={{item.goods_id}}" class="search_item" wx:for="{{queryGoodsList}}" wx:key="goods_id">
+          {{item.goods_name}}
+        </navigator>
+      </view>
+    <view class="btn" wx:if="{{btnShow}}" bindtap="clearData"><button>取消</button></view>
+  </view>
+  
+</view>

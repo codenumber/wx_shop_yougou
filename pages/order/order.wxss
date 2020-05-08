@@ -1,1 +1,11 @@
-/* pages/order/order.wxss */
+.order_item {
+  border-bottom: 2rpx solid #ccc;
+}
+.order_price_warp, .order_no_warp, .order_date_warp {
+  display: flex;
+  justify-content: space-between;
+  padding: 10rpx 15rpx;
+}
+.order_price {
+  color: var(--themeColor);
+}

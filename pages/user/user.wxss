@@ -1,1 +1,129 @@
-/* pages/user/user.wxss */
+.user_pg {
+
+  height: 110vh;
+  width: 100%;
+  background-color: #ebece7;
+  font-size: 28rpx;
+}
+.user_info_wrap {
+  height: 45vh;
+  align-items: center;
+  position: relative;
+  background-color: var(--themeColor);
+  overflow: hidden;
+}
+.user_info_bg {
+  filter: blur(10rpx);
+  height: 48vh;
+}
+.user_info {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.user_info image {
+  height: 150rpx;
+  width: 150rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.user_name {
+  margin-top: 40rpx;
+  font-size: 26rpx;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+}
+.user_info navigator {
+  width: 150rpx;
+  display: flex;
+  justify-content: center;
+  border: 4rpx solid #000;
+  margin-top: 30rpx;
+  border-radius: 10rpx;
+  padding: 10rpx 0;
+}
+.user_content {
+  position: relative;
+  color: grey;
+}
+.user_main {
+  width: 90%;
+  position: absolute;
+  top: -40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  
+}
+.history_warp {
+  background-color: #fff;
+  display: flex;
+  border-radius: 5rpx;
+  height: 100rpx;
+}
+.history_warp navigator {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.his_num , .his_text {
+  display: flex;
+  justify-content: center;
+} 
+.history_warp navigator view:first-child {
+  color: var(--themeColor);
+}
+.user_order {
+  margin-top: 15rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.order_title {
+  flex: 1;
+  padding: 15rpx 10rpx;
+  border-bottom: 1rpx solid #ccc;
+}
+.order_content {
+  flex: 3;
+  display: flex;
+}
+.order_item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 15rpx;
+  flex-direction: column;
+}
+.order_item .iconfont {
+  color: var(--themeColor);
+  font-size: 50rpx;
+}
+.user_address {
+  margin-top: 15rpx;
+  background-color: #fff;
+  padding: 15rpx;
+}
+.app_help {
+  background-color: #fff;
+  margin-top: 15rpx;
+  
+}
+.app_help .app_help_item {
+  border-bottom: 1rpx solid #ccc;
+  padding: 15rpx;
+}
+.app_help>view:last-child {
+  border: none;
+}
+.app_service {
+  display: flex;
+  justify-content: space-between
+}
+.share {
+  padding: 15rpx;
+  margin-top: 15rpx;
+  background-color: #fff;
+}

@@ -1,1 +1,141 @@
-/* pages/pay/pay.wxss */
+.cart_page {
+  padding-bottom: 100rpx;
+}
+.choose_address {
+  padding: 20rpx;
+}
+.address_info {
+  padding: 20rpx 10rpx;
+}
+.address_name_phone {
+  display: flex;
+  
+}
+.name {
+  flex: 1;
+  text-align: left;
+}
+.phone {
+  flex: 1;
+  text-align: right;
+}
+.cart_detail {
+  font-size: 36rpx;
+  font-weight: bolder;
+  color: var(--themeColor);
+  padding: 15rpx;
+  border-top: 5rpx solid currentColor;
+  border-bottom: 5rpx solid currentColor;
+}
+.cart_main {
+  display: flex;
+  flex-direction: column;
+}
+.cart_item {
+  display: flex;
+  height: 200rpx;
+  border-bottom: 2rpx solid #ccc;
+}
+.cart_item checkbox-group {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cart_item .cart_img {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cart_img image {
+  width: 80%;
+}
+.goods_desc {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-right: 20rpx;
+}
+.goods_desc .goods_name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.goods_price_num {
+  display: flex;
+  justify-content: space-between;
+}
+.goods_price {
+  color: var(--themeColor);
+  font-size: 36rpx;
+  font-weight: bolder;
+}
+.cart_tool {
+  display: flex;
+}
+.cart_tool .cart_edit {
+  width: 55rpx;
+  height: 55rpx;
+  border: 1px solid #ccc;
+  border-radius: 5rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.goods_num {
+  width: 55rpx;
+  height: 55rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bottom_tool {
+  position: fixed;
+  height: 90rpx;
+  background-color: #fff;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  border-top: 2rpx solid #ccc;
+}
+.bottom_tool checkbox-group {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.cart_sum_price {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  padding-right: 10rpx;
+}
+.sum_price {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.sum_price .sum_price_num {
+  color: var(--themeColor);
+  font-size: 36rpx;
+}
+.freight_text {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.sumbtn {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: #fff;
+  background-color: var(--themeColor);
+}

@@ -1,6 +1,7 @@
 .tabs_container {
   display: flex;
   width: 100%;
+  border-bottom: 2rpx solid #ccc; 
 }
 .tab_item {
   flex: 1;

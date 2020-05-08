@@ -1,1 +1,56 @@
-/* pages/feedback/feedback.wxss */
+page {
+  background-color: #eceeeb;
+}
+.fb_box {
+  padding: 20rpx;
+  
+}
+.fb_item_wrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15rpx;
+}
+.fb_item_wrap .fb_item {
+  border-radius: 10rpx;
+  height: 70rpx;
+  width: 30%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30rpx 10rpx 10rpx 10rpx;
+  
+}
+.fb_content {
+  background-color: #fff;
+  padding: 15rpx;
+  margin-bottom: 15rpx;
+}
+.fb_content textarea {
+  height: 200rpx;
+}
+.content_btm {
+  display: flex;
+  flex-wrap: wrap;
+}
+.content_btm button {
+  width: 90rpx;
+  height: 90rpx;
+  display: flex;
+  font-size: 50rpx;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15rpx;
+  margin-left: 10rpx;
+}
+.fb_submit {
+  display: flex;
+  justify-content: flex-end;
+}
+.fb_submit button {
+  width: 200rpx;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

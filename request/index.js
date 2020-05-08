@@ -1,5 +1,11 @@
 let ajaxTimes = 0
 export  const request = (params) => {
+  let header = {...params.header}
+  const token = wx.getStorageSync('token')
+  console.log(header)
+  if (params.url.includes('my')) {
+    header["Authorization"] = token
+  }
   const base_Url = "https://api-hmugo-web.itheima.net/api/public/v1"
   ajaxTimes ++
   wx.showLoading({
@@ -9,6 +15,7 @@ export  const request = (params) => {
   return new Promise((resolve, reject) => {
     wx.request({
       ...params,
+      header,
       url: base_Url + params.url ,
       success: (result) => {
         resolve(result)

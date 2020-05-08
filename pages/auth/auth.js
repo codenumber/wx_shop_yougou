@@ -1,4 +1,6 @@
 // pages/auth/auth.js
+import {getLogin} from '../../utils/asyncWx.js'
+import {request} from '../../request/index.js'
 Page({
 
   /**
@@ -7,7 +9,21 @@ Page({
   data: {
 
   },
-
+  async handleUserInfo(e) {
+    console.log(e)
+    try {
+      const {encryptedData, rawData, iv, signature} = e.detail
+    const {code} = await getLogin()
+    const data = {encryptedData, rawData, iv, signature,code}
+    const res = await request({url:'/users/wxlogin',method: "POST",data})
+    //页面的请求是无效的，因为这个需要企业级id与接口开放，借用一个提供的token
+    
+    wx.setStorageSync('token',"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJpYXQiOjE1NjQ3MzAwNzksImV4cCI6MTAwMTU2NDczMDA3OH0.YPt-XeLnjV-_1ITaXGY2FhxmCe4NvXuRnRB8OMCfnPo")
+    wx.navigateBack()
+  } catch(err) {
+      console.log(err)
+    }
+ },
   /**
    * 生命周期函数--监听页面加载
    */

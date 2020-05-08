@@ -1,12 +1,14 @@
 // pages/goods_detail/goods_detail.js
 import {request} from '../../request/index.js'
+import {showToast} from '../../utils/asyncWx.js'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    goodsInfo: {}
+    goodsInfo: {},
+    isCollect: false
   },
   goods_id: 0,
   //本地商品
@@ -16,7 +18,6 @@ Page({
    */
   async getGoodsInfo() {
     const res = await request({url:'/goods/detail',data: {goods_id: this.goods_id}})
-    console.log(res)
     if (res.data.meta.status !== 200) return 
     this.goodsObj = res.data.message
     this.setData({
@@ -32,7 +33,6 @@ Page({
   handlePreview(e) {
     const urls = this.data.goodsInfo.pics.map(v => v.pics_mid_url)
     const current = e.currentTarget.dataset.url
-    console.log(e)
     wx.previewImage({
       current, // 当前显示图片的http链接
       urls // 需要预览的图片http链接列表
@@ -42,11 +42,12 @@ Page({
   addCart() {
     const cart = wx.getStorageSync('cart') || []
     const index = cart.findIndex(v => v.goods_id === parseInt(this.goods_id))
-    console.log(index,this.goods_id)
+    
     if (index !== -1) {
       cart[index].num ++
     } else {
       this.goodsObj.num = 1
+      this.goodsObj.checked = false
       cart.push(this.goodsObj)
     }
     wx.setStorageSync('cart',cart)
@@ -55,34 +56,51 @@ Page({
       icon: 'success',
       mask: true
     })
-    注意
   },
-  onLoad: function (options) {
-    this.goods_id = options.goods_id
-    this.getGoodsInfo()
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  
-  onReady: function () {
-
+  async changeCollectStatus() {
+    const collect = wx.getStorageSync('collect') || []
+    console.log(this.goods_id)
+    console.log(collect)
+    console.log(index)
+    const index = collect.findIndex(v => v.goods_id === parseInt(this.goods_id))
+    let titleStatus = ""
+    if (index === -1) {
+      this.data.isCollect = true
+      collect.push(this.goodsObj)
+      titleStatus = "收藏"
+    } else {
+      this.data.isCollect = false
+      collect.splice(index,1)
+      titleStatus = "取消收藏"
+    }
+    wx.setStorageSync('collect', collect)
+    this.setData({
+      isCollect: this.data.isCollect
+    })
+    await showToast(titleStatus + "成功")
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    const pages = getCurrentPages()
+    const {options} = pages[pages.length - 1]
+    this.goods_id = options.goods_id
+    this.getGoodsInfo()
+    let collect = wx.getStorageSync('collect') || []
+    let isCollect = collect.some(v => v.goods_id === parseInt(this.goods_id))
+    this.setData({
+      isCollect
+    })
   },
-
+  onLoad(options) {
+    console.log()
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
   },
 
   /**

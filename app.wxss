@@ -1,6 +1,6 @@
 
 @import "./style/icons.wxss";
-page,button,view,swiper,swiper-item,navigator,image{
+page,button,view,swiper,swiper-item,navigator,image,input{
   padding: 0;
   margin: 0;
   box-sizing: border-box;

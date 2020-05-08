@@ -1,1 +1,49 @@
-/* pages/collect/collect.wxss */
+.collect_pg {
+  height: 100vh;
+  background-color: #f2f4f5;
+}
+
+.collect_title {
+  background-color: #f2f4f5;
+}
+.title_item {
+  display: inline-block;
+  margin:5rpx 15rpx 20rpx;
+  background-color: #fff;
+  padding: 10rpx 10rpx;
+  border-radius: 5rpx;
+  border: 1rpx solid #ccc;
+}
+.collect_title .active {
+  color: var(--themeColor);
+  border: 2rpx solid var(--themeColor);
+}
+.goods_list navigator {
+  display: flex;
+  height: 250rpx;
+  height: 100%;
+  border-bottom: 2rpx solid #cdcdcd;
+  background-color: #fff;
+}
+.goods_image {
+  flex: 1.5;
+  height: 100%;
+}
+
+.goods_desc {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10rpx 0 0 20rpx;
+}
+.goods_name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.goods_price {
+  color: var(--themeColor);
+  font-size: 32rpx;
+}
