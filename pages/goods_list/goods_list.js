@@ -32,6 +32,7 @@ Page({
     pagesize: 10
   },
   cid: 0,
+  query: '',
   total: 0,
   changItemIndex(e) {
     const {index} = e.detail
@@ -42,23 +43,22 @@ Page({
   },
   async getGoodsList() {
     this.queryInfo.cid = this.cid
-    const res = await request({url:'/goods/search',data: this.queryInfo})
-    if (res.data.meta.status !== 200) return
-    console.log(res.data.message)
-    this.total = res.data.message.total
+    this.queryInfo.query = this.query
+    const {data:{meta},data:{message}} = await request({url:'/goods/search',data: this.queryInfo})
+    if (meta.status !== 200) return
+    this.total = message.total
     this.setData({
-      goodsList: res.data.message.goods
+      goodsList: message.goods
     })
     wx.stopPullDownRefresh()
   },
   // 获取新数据
   async  getNewGoodsList() {
-    this.queryInfo.pagenum++
+    this.queryInfo.pagenum ++
     if (this.queryInfo.pagenum <= Math.ceil(this.total/this.queryInfo.pagesize)) {
-      const res = await request({url:'/goods/search',data: this.queryInfo})
-      if (res.data.meta.status !== 200) return
-      const newGoodsList = res.data.message.goods
-      console.log(res)
+      const {data:{meta},data:{message}} = await request({url:'/goods/search',data: this.queryInfo})
+      if (meta.status !== 200) return
+      const newGoodsList = message.goods
       const goodsList = [...newGoodsList,...this.data.goodsList]
        this.setData({
          goodsList: goodsList
@@ -75,7 +75,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
  onLoad: function (options) {
-    this.cid = options.cid
+    this.cid = options.cid || ''
+    this.query = options.query || ''
     this.getGoodsList()
   },
 

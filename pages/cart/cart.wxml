@@ -1,4 +1,12 @@
 <view class="cart_page">
+<view wx:if="{{!token.length}}"  class="cart_login">
+  <view class="">当前状态未登录，登录已获取用户信息</view>
+     <button type="primary" plain open-type="getUserInfo"  bindgetuserinfo="handleUserInfo">
+    授权登录
+  </button>
+</view>
+<!-- 判断有没有登录过，有token的就显示当前页面，没有不予显示购物车 -->
+<view wx:else> 
   <view class="choose_address" wx:if="{{!address.userName}}">
     <button type="primary" bindtap="handleAdress" plain>+添加收货地址</button>
   </view>
@@ -59,4 +67,6 @@
     </view>
     <view class="sumbtn" bindtap="toPay">结算({{totalNum}})</view>
   </view>
+</view>
+  
 </view>

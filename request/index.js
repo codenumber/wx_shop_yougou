@@ -2,7 +2,6 @@ let ajaxTimes = 0
 export  const request = (params) => {
   let header = {...params.header}
   const token = wx.getStorageSync('token')
-  console.log(header)
   if (params.url.includes('my')) {
     header["Authorization"] = token
   }

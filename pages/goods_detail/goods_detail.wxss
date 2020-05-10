@@ -1,6 +1,21 @@
+page {
+  background-color: #f2f2f2;
+}
+.goods_list {
+  height: 100vh;
+}
+.bodyLock{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
 .goods_pics {
   height: 70vw;
-  
+  background-color: #fff;
 }
 .pic_item {
   height: 100%;
@@ -11,14 +26,18 @@
 .pic_item image{
   width: 90vw;
 }
+.goodsinfo
 .goods_price {
   color: var(--themeColor);
   font-size: 36rpx;
   font-weight: bold;
   padding: 0 10rpx;
+  
+  background-color: #fff;
 }
 .goods_title {
   display: flex;
+  background-color: #fff;
 }
 .goods_name {
   flex: 5;
@@ -28,6 +47,7 @@
   overflow: hidden;
   padding-left: 15rpx;
   margin-bottom: 10rpx;
+  background-color: #fff;
 }
 .collect {
   flex: 1;
@@ -48,15 +68,43 @@
 .icon-star--filled {
   color: var(--themeColor);
 }
+/* 商品点击模块 */
+.goods_choose_content {
+  margin-top: 15rpx;
+  background: #fff;
+}
+
+ .shopping_info_nav,.user_adress_nav {
+  padding: 30rpx 0;
+  display: flex;
+  width: 100%;
+  position: relative;
+  border-bottom: 2rpx solid #ccc;
+}
+.shopping_info_nav view:first-child, .user_adress_nav view:first-child {
+  font-size: 28rpx;
+  font-weight: bolder;
+  width: 100rpx;
+  padding-left: 20rpx;
+}
+.shopping_info_content, .user_address_content {
+  
+}
+.shopping_info_nav .iconnav, .user_adress_nav .iconnav {
+  width: 10vw;
+  position: absolute;
+  right: 0;
+}
+
 .introduce_title {
+  margin: 10rpx 0;
   height: 80rpx;
   padding-left: 15rpx;
   display: flex;
   align-items: center;
   font-weight: bolder;
   font-size: 36rpx;
-  border-top: 4rpx solid #ccc;
-  border-bottom: 4rpx solid #ccc;
+  background-color: #fff;
 }
 .goodsinfo {
   margin-bottom: 90rpx;
@@ -76,6 +124,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative
 }
 .btm_item .iconfont {
   font-size: 46rpx;
@@ -97,9 +146,156 @@
   align-items: center;
   justify-content: center;
   color: #fff;
-  background-color: #ffa300;
+  background-color: #ffc10c;
 }
 .btm_btn:last-child {
   background-color: var(--themeColor);
 }
+.page_disable {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.4);
+  z-index: 100;
+}
+.choose_shopping {
+  height: 80vh;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 15rpx 15rpx 0 0;
+  padding: 20rpx;
+
+}
+.shopping_title {
+  display: flex;
+  height: 200rpx;
+  width: 100%;
+  position: relative;
+}
+.shopping_title .shopping_img {
+  flex: 1;
+}
+.shopping_img image {
+  width: 200rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+  border: 1rpx solid #ccc;
+}
+.shopping_title .shopping_desc {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 15rpx;
+}
+.close_shopping_icon {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background-color: #ebebeb;
+  color: #929292;
+  position: absolute;
+  top: 15rpx;
+  right: 15rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.shopping_desc .shopping_price {
+  color: var(--themeColor);
+  font-size: 40rpx;
+}
+.choose_service {
+  height: 46vh;
+  padding: 15rpx;
+}
+ .shopping_color_title {
+  margin: 20rpx 0;
+}
+.shopping_color_content {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+.color_item {
+  padding: 15rpx 30rpx;
+  border-radius: 50rpx;
+  background-color: #f2f2f2;
+  margin: 10rpx 10rpx 10rpx 0;
+}
+.active {
+  color: var(--themeColor);
+  font-weight: bolder;
+  border: 2rpx solid var(--themeColor);
+}
+.shopping_num {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+
+}
+.shopping_num_tool {
+  display: flex;
+}
+.shopping_num .shopping_num_tool view, .num {
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 15rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+}
+.num {
+  padding-left: 20rpx;
+  background-color: #f2f2f2;
+}
+.shopping_attr {
+  margin-top: 15rpx ;
+}
+.shopping_attr .attr_title {
+  margin-bottom: 20rpx;
+}
+.attr_content {
+  background-color: #f2f2f2;
+}
+.attr_content .attr_item {
+  line-height: 70rpx;
+  border-bottom: 2rpx solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+  padding: 0 10rpx 0 10rpx;
+}
+
+.to_order {
+  height: 8vh;
+  padding: 10rpx;
+  display: flex;
+}
+.to_order button {
+  flex: 1;
+  border-radius: 60rpx;
+  background-color: var(--themeColor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  height: 100rpx;
+}
+.to_order .cart {
+  background-color: #ffc10c;
+  margin-right: 30rpx;
+}
+
+
+
+
 

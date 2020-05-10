@@ -10,7 +10,7 @@
     <view wx:else>
       <view  class="user_info">
           <image src="../../icons/github.png" class="user_avatar"></image>
-          <navigator url="../login/login">登录></navigator>
+          <navigator url="../auth/auth">登录></navigator>
         </view>
     </view>
   </view>
@@ -82,6 +82,7 @@
     <navigator>
       <view class="share">
       把应用分享给别人
+      <button  open-type="share" >1</button>
     </view>
     </navigator>
     

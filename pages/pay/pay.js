@@ -1,5 +1,7 @@
 // pages/cart/cart.js
-import {requestPayment,showToast} from '../../utils/asyncWx.js'
+import {getSetting, openSetting, chooseAddress, showModal, showToast} from '../../utils/asyncWx.js'
+
+import {requestPayment} from '../../utils/asyncWx.js'
 import { request } from '../../request/index.js'
 
 Page({
@@ -11,7 +13,8 @@ Page({
     address: {},
     cart: [],
     totalPrice: 0,
-    total: 0
+    total: 0,
+    goodsInfo: {}
   },
   setDataValue(cart) {
     let totalPrice = 0
@@ -89,17 +92,48 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    
+    const pages = getCurrentPages()
+    //判断页面是从购物车还是从商品页直接购买过来的
+    console.log(pages)
+    if (pages[pages.length - 2].route.includes('goods_detail')) {
+      const goodsInfo = wx.getStorageSync('goods')
+      this.data.totalPrice = goodsInfo.num * goodsInfo.goods_price
+      //直接在当前data对象cart添加一个对象,先检测购物车缓存中是否有商品，防止从授权页获取信息跳转回来报错
+      this.data.cart = []
+      this.data.cart.push(goodsInfo)
+      this.setData({
+        cart: this.data.cart,
+        totalPrice: this.data.totalPrice
+      })
+      
+    }else {
+      const cart = wx.getStorageSync('cart').filter(v => v.checked)
+      this.setDataValue(cart)
+    }
     const address = wx.getStorageSync('address')
-    const cart = wx.getStorageSync('cart').filter(v => v.checked)
     this.setData({address})
-    this.setDataValue(cart)
   },
-
+  async handleAdress() {
+    try {
+      const res = await getSetting()
+      const scopeAdress = res.authSetting["scope.address"]
+      if (scopeAdress === false ) {
+        await openSetting()
+      }
+        let address = await chooseAddress()
+        address.all = address.provinceName + address.cityName + address.countyName + address.detailInfo
+        wx.setStorageSync('address',address)
+    } catch (error) {
+        console.log(error)
+    }
+  
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    //页面隐藏就删除缓存
   },
 
   /**

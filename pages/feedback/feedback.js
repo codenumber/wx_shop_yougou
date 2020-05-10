@@ -70,12 +70,12 @@ Page({
           name: 'image',
           url: 'https://img.coolcr.cn/api/upload',
           success: (res) => {
-            console.log(err)
             const { data: {url}} = JSON.parse(res.data)
+            console.log(url)
             // if (code !== 200) return 
             this.successImgList.push(url)
             if (i === this.data.srcList.length - 1) {
-              //上传文字这一类的信息
+              //上传文字这一类的信息，没接口
               wx.hideLoading({
                 complete: (res) => {
                   wx.showToast({
@@ -93,18 +93,20 @@ Page({
           }
         })
       })
+    } else {
+      //如果没有上传相片，执行上传文字信息后隐藏加载框
+      wx.hideLoading({
+        complete: (res) => {
+          wx.showToast({
+            title: '上传成功',
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        },
+      })
     }
-    console.log(this.successImgList)
-    wx.hideLoading({
-      complete: (res) => {
-        wx.showToast({
-          title: '上传成功',
-        })
-        wx.navigateBack({
-          delta: 1
-        })
-      },
-    })
+    
   },
   /**
    * 生命周期函数--监听页面加载

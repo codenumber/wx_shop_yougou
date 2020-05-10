@@ -50,6 +50,24 @@ export const showModal = (content) => {
     })
   })
 }
+export const toAuthorModal = (content) => {
+  return new  Promise ((resolve,reject) => {
+    wx.showModal({
+      title: '提示',
+      content: '还未登录，是否登录获取信息',
+      success (res) {
+        if (res.confirm) {
+          wx.navigateTo({
+            url: '/pages/auth/auth',
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  })
+}
+
 export const showToast = (title) => {
   return  new Promise((resolve,reject) => {
     wx.showToast({

@@ -61,7 +61,9 @@ Page({
    */
   onShow: function () {
     const pageList = getCurrentPages()
-    const {type} = pageList[pageList.length-1].options
+    console.log(pageList)
+    const {type} = pageList[pageList.length-1].options.type? pageList[pageList.length-1].options : {type: 1}
+    console.log(type)
     this.changTitleActive(type-1)
     this.getOrderList(type)
   },

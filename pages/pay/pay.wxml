@@ -1,6 +1,9 @@
 <view class="cart_page">
   <view >
-    <view class="address_info">
+    <view class="choose_address" wx:if="{{!address.userName}}">
+    <button type="primary" bindtap="handleAdress" plain>+添加收货地址</button>
+   </view>
+    <view wx:else class="address_info">
       <view class="address_name_phone">
         <view class="name">收货人：{{address.userName}}</view>
         <view class="phone">收货手机：{{address.telNumber}}</view>

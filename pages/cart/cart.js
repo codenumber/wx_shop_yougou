@@ -1,6 +1,6 @@
 // pages/cart/cart.js
-import {getSetting, openSetting, chooseAddress, showModal, showToast} from '../../utils/asyncWx.js'
-
+import {getSetting, openSetting, chooseAddress, showModal,getLogin,showToast} from '../../utils/asyncWx.js'
+import {request} from "../../request/index.js"
 Page({
 
   /**
@@ -11,7 +11,8 @@ Page({
     cart: [],
     allChecked: false,
     totalPrice: 0,
-    total: 0
+    total: 0,
+    token: ''
   },
   async handleAdress() {
     try {
@@ -96,11 +97,28 @@ Page({
       url: '../pay/pay',
     })
   },
+  async handleUserInfo(e) {
+    console.log(e)
+    try {
+      const {encryptedData, rawData, iv, signature,userInfo} = e.detail
+      const {code} = await getLogin()
+      const data = {encryptedData, rawData, iv, signature,code}
+      const res = await request({url:'/users/wxlogin',method: "POST",data})
+      //页面的请求是无效的，因为这个需要企业级id与接口开放，借用一个提供的token
+      if (userInfo) {
+        wx.setStorageSync('userInfo',userInfo)
+        wx.setStorageSync('token',"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJpYXQiOjE1NjQ3MzAwNzksImV4cCI6MTAwMTU2NDczMDA3OH0.YPt-XeLnjV-_1ITaXGY2FhxmCe4NvXuRnRB8OMCfnPo")
+      }
+    //促使页面重新显示，不然页面判断依旧
+      this.onShow()
+  } catch(err) {
+      console.log(err)
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   /**
@@ -114,9 +132,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    console.log('22')
     const address = wx.getStorageSync('address')
     const cart = wx.getStorageSync('cart') || []
-    this.setData({address})
+    const token = wx.getStorageSync('token') || ''
+    this.setData({address,token})
     this.setDataValue(cart)
   },
 
@@ -124,7 +144,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log('heih')
   },
 
   /**

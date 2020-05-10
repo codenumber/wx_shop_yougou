@@ -8,11 +8,17 @@ Page({
    */
   data: {
     goodsInfo: {},
-    isCollect: false
+    isCollect: false,
+    animationData: {},
+    num: 1,
+    address: {},
+    showCart: false
   },
   goods_id: 0,
   //本地商品
   goodsObj: {},
+  showShopping: false,
+  nav: false,
   /**
    * 生命周期函数--监听页面加载
    */
@@ -20,13 +26,17 @@ Page({
     const res = await request({url:'/goods/detail',data: {goods_id: this.goods_id}})
     if (res.data.meta.status !== 200) return 
     this.goodsObj = res.data.message
+    console.log(this.goodsObj)
+    console.log(res.data.message.goods_big_logo)
     this.setData({
       goodsInfo: {
         goods_id: res.data.message.goods_id,
         goods_price: res.data.message.goods_price,
         goods_name: res.data.message.goods_name,
         goods_introduce: res.data.message.goods_introduce.replace(/.webp/g,'.jpg'),
-        pics: res.data.message.pics
+        pics: res.data.message.pics,
+        goods_big_logo: res.data.message.goods_big_logo,
+        attrs: res.data.message.attrs
       }
     })
   },
@@ -40,13 +50,13 @@ Page({
   },
   //添加在本地购物车数据
   addCart() {
+
     const cart = wx.getStorageSync('cart') || []
     const index = cart.findIndex(v => v.goods_id === parseInt(this.goods_id))
-    
     if (index !== -1) {
-      cart[index].num ++
+      cart[index].num += this.data.num
     } else {
-      this.goodsObj.num = 1
+      this.goodsObj.num = this.data.num
       this.goodsObj.checked = false
       cart.push(this.goodsObj)
     }
@@ -59,9 +69,6 @@ Page({
   },
   async changeCollectStatus() {
     const collect = wx.getStorageSync('collect') || []
-    console.log(this.goods_id)
-    console.log(collect)
-    console.log(index)
     const index = collect.findIndex(v => v.goods_id === parseInt(this.goods_id))
     let titleStatus = ""
     if (index === -1) {
@@ -85,22 +92,106 @@ Page({
    */
   onShow: function () {
     const pages = getCurrentPages()
-    const {options} = pages[pages.length - 1]
+    const {options} = pages[pages.length - 1] 
     this.goods_id = options.goods_id
     this.getGoodsInfo()
     let collect = wx.getStorageSync('collect') || []
+    const address = wx.getStorageSync('address') || {}
     let isCollect = collect.some(v => v.goods_id === parseInt(this.goods_id))
     this.setData({
-      isCollect
+      isCollect,
+      address
     })
   },
+  showShoppingDialog(e) {
+    //如果打开过这个选项。再次点击点击购买时直接去订单页面
+    if (!e.currentTarget.dataset.nav) {
+      if (this.nav) {//如果nav是ture就说明点击过商品属性选择模块。此时直接去付款
+        return this.toPay()
+      }
+    }
+      if(e.currentTarget.dataset.nav) {
+        this.setData({
+          showCart: true
+        })
+      }
+    this.nav = e.currentTarget.dataset.nav ?  e.currentTarget.dataset.nav : false
+    console.log(this.nav)
+    var animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'ease',
+    })
+
+    this.animation = animation
+
+    animation.translateY(600).step()
+
+    this.setData({
+      animationData:animation.export(),
+      showShopping: true
+    })
+    setTimeout(() => {
+      animation.translateY(20).step()
+      this.setData({
+        animationData: animation.export(),
+      })
+    },100)
+  },
+  stopTouch() {},
+  closeShoppingDialog() {
+    var animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'ease',
+    })
+
+    this.animation = animation
+
+    animation.translateY(600).step()
+
+    this.setData({
+      animationData:animation.export()
+    })
+    setTimeout(() => {
+      animation.translateY(20).step()
+      this.setData({
+        animationData: animation.export(),
+        showShopping: false
+      })
+    },100)
+    
+  },
+  changNum(e) {
+    const {operation} = e.currentTarget.dataset
+    if (this.data.num == 1 && parseInt(operation) === -1) {
+      return showToast("商品数量为1")
+    }
+    this.data.num += parseInt(operation)
+    this.setData({
+      num: this.data.num
+    })
+  },
+  toPay() {
+    this.goodsObj.num = this.data.num
+    wx.setStorageSync('goods',this.goodsObj)
+    wx.navigateTo({
+      url: '../pay/pay',
+    })
+  },
+  
   onLoad(options) {
-    console.log()
+    wx.login({
+      success: (res) => {
+        console.log(res)
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    this.setData({
+      num: 1
+    })
   },
 
   /**

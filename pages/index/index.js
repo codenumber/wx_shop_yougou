@@ -14,24 +14,38 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async getSwiperList() {
-    const res = await request( {url:'/home/swiperdata'})
-    if (res.data.meta.status !== 200) return 
+    let {data:{meta},data:{message}} = await request( {url:'/home/swiperdata'})
+    if (meta.status !== 200) return 
+    //处理轮播图的跳转地址
+    message.forEach(v => {
+      v.navigator_url = v.navigator_url.replace(/main/,"goods_detail")
+    })
     this.setData({
-      swiperList: res.data.message
+      swiperList: message
     })
   },
   async getCateList() {
-    const res = await request({url: '/home/catitems'})
-    if (res.data.meta.status !== 200) return 
+    const {data:{meta},data:{message}} = await request({url: '/home/catitems'})
+    if (meta.status !== 200) return
+    message.forEach(v => {
+      if (v.navigator_url) {
+        v.navigator_url = v.navigator_url.replace(/main/,"category")
+      }
+    }) 
     this.setData({
-      cateList: res.data.message
+      cateList: message
     })
   },
   async getGoodsList() {
-    const res = await request({url: '/home/floordata'})
-    if (res.data.meta.status !== 200) return 
+    const {data:{meta},data:{message}} = await request({url: '/home/floordata'})
+    if (meta.status !== 200) return 
+    message.forEach(v => {
+      v.product_list.forEach(v1 => {
+        v1.navigator_url = v1.navigator_url.replace(/goods_list/,'goods_list/goods_list')
+      })
+    })
     this.setData({
-      floorList: res.data.message
+      floorList: message
     })
   },
   onLoad: function (options) {

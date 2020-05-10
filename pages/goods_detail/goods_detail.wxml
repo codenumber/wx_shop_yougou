@@ -1,35 +1,56 @@
-<view class="goods_list">
+
+<scroll-view scroll-y class="goods_list {{showShopping? 'bodyLock': ''}}">
   <swiper class='goods_pics' autoplay indicator-dots circular>
     <swiper-item bindtap="handlePreview" data-url="{{item.pics_mid_url}}" class="pic_item" wx:for="{{goodsInfo.pics}}" wx:key="pics_id">
       <image  mode="widthFix" src="{{item.pics_mid}}"></image>
     </swiper-item>
   </swiper>
+
   <view class="goodsinfo">
     <view class="goods_price">￥{{goodsInfo.goods_price}}</view>
     <view class="goods_title">
       <view class="goods_name">
       {{goodsInfo.goods_name}}
       </view>
+   
+      <!-- 收藏模块 -->
       <view class="collect" bindtap="changeCollectStatus"> 
         <view class="iconfont {{isCollect ? 'icon-star--filled':'icon-star'}}"></view>
         <view class="collect_text"><text wx:if="{{isCollect}}">已</text>收藏</view>
       </view>
-      
     </view>
+    
+    <!-- 默认选中商品模块  -->
+    <view class="goods_choose_content">
+      <view class="shopping_info_nav" data-nav="true" bindtap="showShoppingDialog">
+        <view class="shopping_info_text">已选</view>
+        <view clas="shopping_info_content">默认颜色，默认数量{{num}}个</view>
+        <view class="iconnav iconfont icon-gengduo"></view>
+      </view>
+      <view class="user_adress_nav">
+          <view class="user_address_text">送至</view>
+          <view class="user_address_content">{{address.userName? address.all : "用户暂未，登录获取收货信息"}}</view>
+          <view class="iconnav iconfont icon-gengduo"></view>
+      </view>
+    </view>
+
     <view class="introduce_title">
       图文详情
     </view>
     <rich-text nodes="{{goodsInfo.goods_introduce}}"></rich-text>
   </view>
+
+  <!-- 下方工具栏 -->
   <view class="btm_menu">
     <view class="btm_item">
       <view class="iconfont icon-service"></view>
       <view>联系客服</view>
-      <button open-type="contact" size="mini">1</button>
+      <button open-type="contact">1</button>
     </view>
     <view class="btm_item">
       <view class="iconfont icon-share"></view>
       <view>分享</view>
+      <button open-type="share">2</button>
     </view>
     <navigator open-type="switchTab" url="../cart/cart" class="btm_item">
       <view class="iconfont icon-cart-Empty"></view>
@@ -38,8 +59,71 @@
     <view class="btm_btn" bindtap="addCart">
       <view>加入购物车</view>
     </view>
-    <view class="btm_btn">
+    <view class="btm_btn" bindtap="showShoppingDialog">
       <view>立即购买</view>
     </view>
   </view>
-</view>
+
+  
+
+</scroll-view>
+
+<!-- 立即购买时弹出窗口 -->
+  <view class="page_disable" wx:if="{{showShopping}}" catchtouchmove="stopTouch">
+     <view animation="{{animationData}}" class="choose_shopping">
+      <view class="shopping_title">
+        <view class="shopping_img">
+          <image mode="widthFix" src="{{goodsInfo.goods_big_logo}}"></image>
+        </view>
+        <view class="shopping_desc">
+          <view class="shopping_price">￥{{goodsInfo.goods_price}}</view>
+          <view class="shoping_cate">xuaanze</view>
+          <view class="shopping_num">×{{num}}</view>
+        </view>
+        <view class="close_shopping_icon" bindtap="closeShoppingDialog">×</view>
+      </view>
+    <scroll-view scroll-y class="choose_service">
+      <view class="shopping_color">
+        <view class="shopping_color_title">颜色</view>
+        <view class="shopping_color_content" data-index="index" >
+          <view class="color_item active" >白色</view>
+          <view class="color_item">白色</view>
+          <view class="color_item">白色</view>
+          <view class="color_item">白色</view>
+          <view class="color_item">白色</view>
+          <view class="color_item">白色</view>
+          <view class="color_item">白色</view>
+          <view class="color_item">白色</view>
+        </view>
+       
+      </view>
+      <view class="shopping_num">
+        <view class="shopping_num_text">数量</view>
+        <view class="shopping_num_tool">
+          <view data-operation="-1" bindtap="changNum" >-</view>
+          <input type="number" value="{{num}}" class="num"></input>
+          <view data-operation="+1" bindtap="changNum">+</view> 
+        </view>
+      </view>
+      <!-- 属性内容 -->
+      <view class="shopping_attr">
+        <view class="attr_title">
+        属性
+        </view>
+        <view class="attr_content">
+          <view wx:for="{{goodsInfo.attrs}}"  wx:key="index" class="attr_item">
+            <view class="attr_name">{{item.attr_name}}</view>
+            <view class="attr_value">{{item.attr_value}}</view>
+          </view>
+        </view>
+        
+      </view>
+
+    </scroll-view>
+    <view class="to_order">
+    <button class="cart" wx:if="{{showCart}}" bindtap="addCart">加入购物车</button>
+    <button bindtap="toPay">确定购买</button>
+    </view>
+  </view>
+  </view>
+ 

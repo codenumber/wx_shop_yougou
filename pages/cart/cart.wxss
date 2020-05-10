@@ -1,6 +1,21 @@
 .cart_page {
   padding-bottom: 100rpx;
 }
+.cart_login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  font-size: 30rpx;
+}
+.cart_login button {
+  width: 200rpx;
+  border-radius: 50rpx;
+  border: 2rpx solid #ccc;
+  margin-top: 40rpx;
+}
 .choose_address {
   padding: 20rpx;
 }
